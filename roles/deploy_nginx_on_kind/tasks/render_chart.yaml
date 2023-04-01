@@ -1,0 +1,13 @@
+---
+- name: Copy the helm chart folder to the remoted server
+  copy:
+    src: webapp-chart
+    dest: /tmp/
+    owner: root
+    group: root
+    mode: 0664
+
+- name: Copy the values file to the chart folder while replacing headline value
+  template:
+    src: values.yaml
+    dest: /tmp/webapp-chart

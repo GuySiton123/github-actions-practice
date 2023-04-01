@@ -1,0 +1,23 @@
+#---
+#- name: Add kubectl yum repo
+#  yum_repository:
+#    name: Kubernetes
+#    description:  Kubernetes repository
+#    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+#    gpgcheck: no
+#    state: present
+#
+#- name: Install kubectl yum package
+#  yum:
+#    name: kubectl
+#    state: present
+- name: Check if kubectl is installed
+  stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_stat
+
+- name: Download and install kubectl binary
+  shell: curl -o /tmp/kubectl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && install -o root -g root -m 0755 /tmp/kubectl /usr/local/bin/kubectl
+  args:
+    warn: false
+  when: not kubectl_stat.stat.exists

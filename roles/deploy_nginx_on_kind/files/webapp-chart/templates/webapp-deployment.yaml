@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.Deployment.name }}
+  checksum/ConfigMap: {{ include (print $.Template.BasePath "/webapp-configmap.yaml") . | sha256sum }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.Deployment.app }}
+  replicas: {{ .Values.Deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.Deployment.app }}
+    spec:
+      containers:
+      - name: {{ .Values.Deployment.containers.name }}
+        image: {{ .Values.Deployment.containers.image }}
+        volumeMounts:
+        - name: {{ .Values.ConfigMap.name }}
+          mountPath: {{ .Values.Deployment.containers.volumeMounts.mountPath }}
+        ports:
+        - containerPort: {{ .Values.Deployment.containers.ports.containerPort }}
+      volumes:
+      - name: {{ .Values.ConfigMap.name }}
+        configMap:
+          name: {{ .Values.ConfigMap.name }}

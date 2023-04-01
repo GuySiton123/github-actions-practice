@@ -1,0 +1,23 @@
+---
+- name: Add dynamic host to linuxhosts group
+  hosts: localhost
+  tasks:
+    - name: Add dynamic host to linuxhosts group
+      include_role:
+        name: add_host_to_group
+
+- name: Install kind and deploy nginx 
+  hosts: linuxhosts
+  become: true
+  tasks:
+    - name: Install kind and other dependencies
+      include_role:
+        name: install_kind_and_dependencies
+
+    - name: Create the kind cluster
+      include_role:
+        name: create_kind_cluster
+
+    - name: Deploy nginx on the kind cluster
+      include_role:
+        name: deploy_nginx_on_kind

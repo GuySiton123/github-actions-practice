@@ -1,0 +1,2 @@
+- name: Set the kind cluster context and install the helm chart
+  shell: "kubectl config use-context kind-{{ kind_cluster_name }} && helm upgrade --install webapp-chart /tmp/webapp-chart"

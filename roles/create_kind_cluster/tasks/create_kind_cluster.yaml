@@ -1,0 +1,14 @@
+---
+- name: Copy the kind cluster creation script to the remoted server
+  template:
+    src: create_kind_cluster.sh
+    dest: /tmp/create_kind_cluster.sh
+    mode: '0770'
+
+- name: Run the kind cluster creation script
+  shell: /tmp/create_kind_cluster.sh
+  register: output
+
+- name: Detailes about the kind cluster creation process
+  debug:
+    msg: "{{ output.stdout_lines }}"

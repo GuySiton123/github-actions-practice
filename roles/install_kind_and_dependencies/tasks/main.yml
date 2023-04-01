@@ -1,0 +1,13 @@
+---
+# tasks file for install_kind_and_dependencies
+- name: Install docker
+  include_tasks: install_docker.yaml
+
+- name: Install kind
+  include_tasks: install_kind.yaml
+
+- name: Install kubectl
+  include_tasks: install_kubectl.yaml
+
+- name: Install helm
+  include_tasks: install_helm.yaml

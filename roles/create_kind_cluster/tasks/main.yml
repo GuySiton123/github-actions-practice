@@ -1,0 +1,4 @@
+---
+# tasks file for create_kind_cluster
+- name: Create kind cluster
+  include_tasks: create_kind_cluster.yaml

@@ -1,0 +1,24 @@
+- name: Check if Docker is installed
+  stat:
+    path: /usr/bin/docker
+  register: docker_stat
+
+- name: Copy docker installation script and run it
+  block:
+  - name: Copy docker installation script to /tmp folder
+    copy:
+      src: get-docker.sh
+      dest: /tmp
+      owner: root
+      group: root
+      mode: 0770
+  
+  - name: Run the docker installation script
+    shell: /tmp/get-docker.sh
+  when: not docker_stat.stat.exists
+
+- name: Enable and start docker service if it aint already
+  service:
+    name: docker
+    state: started
+    enabled: yes

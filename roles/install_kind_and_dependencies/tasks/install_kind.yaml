@@ -1,0 +1,12 @@
+- name: Check if kind is installed
+  stat:
+    path: /usr/local/bin/kind
+  register: kind_stat
+
+- name: Download kind binary and make it usable
+  get_url:
+    url: https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+    dest: /usr/local/bin/kind
+    mode: '0770'
+    validate_certs: no
+  when: not kind_stat.stat.exists

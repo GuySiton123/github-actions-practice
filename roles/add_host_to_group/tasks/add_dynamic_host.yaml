@@ -1,0 +1,4 @@
+- name: Add dynamic hosts to linuxhosts group
+  add_host:
+    host: "{{ host_ip }}"
+    group: linuxhosts

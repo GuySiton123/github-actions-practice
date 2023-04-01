@@ -1,0 +1,7 @@
+---
+# tasks file for add_host_to_group
+- name: Add dynamic host to a group
+  include_tasks: add_dynamic_host.yaml
+
+- name: Add remoted host ssh public key to known_hosts
+  include_tasks: add_host_ssh_key.yaml

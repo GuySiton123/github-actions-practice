@@ -1,0 +1,10 @@
+- name: Retrieve SSH public key of remote host
+  shell: ssh-keyscan -H "{{ host_ip }}"
+  register: ssh_pub_key
+  
+- name: Add remote host SSH public key to known_hosts file
+  lineinfile:
+    path: ~/.ssh/known_hosts
+    line: "{{ ssh_pub_key.stdout }}"
+    state: present
+    create: true

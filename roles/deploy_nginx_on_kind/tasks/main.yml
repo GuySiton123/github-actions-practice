@@ -1,0 +1,7 @@
+---
+# tasks file for deploy_nginx_on_kind
+- name: Render the helm chart to the server
+  include_tasks: render_chart.yaml
+
+- name: Install the helm chart
+  include_tasks: install_chart.yaml

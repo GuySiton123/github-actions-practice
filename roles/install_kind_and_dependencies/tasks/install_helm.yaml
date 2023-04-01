@@ -1,0 +1,27 @@
+#- name: Download helm installation script to temp folder
+#  get_url:
+#    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+#    dest: /tmp/get_helm.sh
+#    mode: '0770'
+#    validate_certs: no
+#
+#- name: Running the helm installation script
+#  shell: /tmp/get_helm.sh
+- name: Check if helm is installed
+  stat:
+    path: /usr/local/bin/helm
+  register: helm_stat
+
+- name: Copy helm installation script and run it
+  block:
+  - name: Copy helm installation script to /tmp folder
+    copy:
+      src: get-helm.sh
+      dest: /tmp
+      owner: root
+      group: root
+      mode: 0770
+
+  - name: Run the helm installation script
+    shell: /tmp/get-helm.sh
+  when: not helm_stat.stat.exists

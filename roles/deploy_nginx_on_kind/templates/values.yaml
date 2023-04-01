@@ -1,0 +1,23 @@
+ConfigMap:
+  name: nginx-config
+  headline: "{{ nginx_headline }}"
+
+Deployment:
+  name: nginx-deployment
+  app: nginx
+  replicas: 1
+  containers:
+    name: nginx
+    image: nginx:1.22.1
+    volumeMounts:
+      mountPath: /usr/share/nginx/html
+    ports:
+      containerPort: 80
+
+Service:
+  name: nginx-service
+  ports:
+    name: http
+    port: 80
+    targetPort: 80
+    nodePort: 30001
